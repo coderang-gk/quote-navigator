@@ -76,3 +76,87 @@ button:focus-visible {
   }
 }
 
+.bg-dark-gray {
+  background-color: #1a1a1a;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-gray-400 {
+  color: #9ca3af;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+.hover\:shadow-xl:hover {
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+}
+
+.transition-all {
+  transition: all 0.3s ease-in-out;
+}
+
+.rounded-xl {
+  border-radius: 1rem;
+}
+
+.clip-triangle {
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.clip-triangle-reverse {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.bg-dark-gray {
+  background-color: #1a1a1a;
+}
+
+.bg-gradient-to-br {
+  background: linear-gradient(to bottom right, #1f2937, #374151);
+}
+.relative {
+  position: relative;
+}
+
+.z-10 {
+  z-index: 10; /* Ensures the quote text stays above background shapes */
+}
+
+.z-0 {
+  z-index: 0; /* Ensures the background shapes stay behind the text */
+}
+
+.bg-shape {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none; /* Prevents interaction with background shapes */
+}
+.bg-checkered {
+  background-color: #242424; /* Base dark color */
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px; /* Adjust size as needed */
+}
+.bg-dark-card {
+  background-color: rgba(36, 36, 36, 0.8); /* Dark translucent color */
+  backdrop-filter: blur(8px); /* Optional for a frosted glass effect */
+}
+
+.icon-bg {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle icon background */
+}
+
+
+
+
+

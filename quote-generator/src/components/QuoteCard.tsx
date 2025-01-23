@@ -9,19 +9,39 @@ interface QuoteCardProps {
 
 const QuoteCard: React.FC<QuoteCardProps> = ({ quote, isFavorite, toggleFavorite }) => {
   return (
-    <div className="border border-gray-300 p-6 rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow">
-      <p className="text-xl font-medium text-gray-700 italic">"{quote.quote}"</p>
-      <p className="text-right text-sm font-semibold text-blue-600 mt-4">
-        - {quote.author || 'Unknown'}
-      </p>
-      <button
-        onClick={() => toggleFavorite(quote)}
-        className={`mt-4 px-4 py-2 rounded ${
-          isFavorite ? 'bg-red-500 text-white' : 'bg-gray-200 text-black'
-        }`}
-      >
-        {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-      </button>
+    <div className="relative bg-gray-900 bg-opacity-50 p-6 rounded-xl shadow-lg max-w-sm flex flex-col justify-between">
+      {/* Content */}
+      <div>
+        <p className="text-sm text-gray-400 mb-2">Quote</p>
+        <p className="text-lg font-bold text-white">{quote.quote}</p>
+      </div>
+
+      {/* Footer */}
+      <div className="flex items-center justify-between mt-4">
+        {/* Author Section */}
+        <div className="flex items-center">
+          {quote.authorImage && (
+            <img
+              src={quote.authorImage}
+              alt={quote.author}
+              className="w-8 h-8 rounded-full object-cover mr-3"
+            />
+          )}
+          <p className="text-sm text-gray-400">{quote.author || 'Unknown'}</p>
+        </div>
+
+        {/* Favorites Button */}
+        <button
+          onClick={() => toggleFavorite(quote)}
+          className={`flex items-center justify-center px-4 py-2 rounded-full shadow-lg text-sm font-semibold transition-transform transform duration-300 ${
+            isFavorite
+              ? 'bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white hover:scale-105 hover:shadow-xl'
+              : 'bg-gray-700 text-gray-400 hover:bg-gray-600 hover:text-gray-200 hover:scale-105 hover:shadow-md'
+          }`}
+        >
+          {isFavorite ? '♥ Remove' : '♡ Add'}
+        </button>
+      </div>
     </div>
   );
 };

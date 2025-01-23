@@ -6,6 +6,7 @@ import { Quote } from '../types/Quote';
 const RandomQuote: React.FC = () => {
   const [quote, setQuote] = useState<Quote | null>(null);
   const [favorites, setFavorites] = useState<Quote[]>([]);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // Load favorites from localStorage on mount
   useEffect(() => {
@@ -21,8 +22,12 @@ const RandomQuote: React.FC = () => {
   }, [favorites]);
 
   const handleFetchQuote = async () => {
+    setIsAnimating(true); // Start animation
     const data = await fetchRandomQuote();
-    setQuote(data);
+    setTimeout(() => {
+      setQuote(data); // Set the new quote after the animation
+      setIsAnimating(false); // End animation
+    }, 300); // Matches the animation duration
   };
 
   const toggleFavorite = (quote: Quote) => {
@@ -35,15 +40,22 @@ const RandomQuote: React.FC = () => {
   };
 
   return (
-    <div className="my-8 text-center">
+    <div className="my-8 flex flex-col items-center">
+      {/* Stylish Button */}
       <button
         onClick={handleFetchQuote}
-        className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors"
+        className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform duration-300 ease-in-out"
       >
         Get Random Quote
       </button>
+
+      {/* Random Quote Card */}
       {quote && (
-        <div className="mt-6">
+        <div
+          className={`random-quote-bg mt-6 max-w-md w-full transition-opacity duration-300 ${
+            isAnimating ? 'opacity-0' : 'opacity-100'
+          }`}
+        >
           <QuoteCard
             quote={quote}
             isFavorite={favorites.some((fav) => fav.id === quote.id)}
