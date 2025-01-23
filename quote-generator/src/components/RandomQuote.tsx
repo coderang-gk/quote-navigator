@@ -3,6 +3,10 @@ import { fetchRandomQuote } from '../utils/api';
 import QuoteCard from './QuoteCard';
 import { Quote } from '../types/Quote';
 
+// Import Font Awesome Icon
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRandom } from '@fortawesome/free-solid-svg-icons';
+
 const RandomQuote: React.FC = () => {
   const [quote, setQuote] = useState<Quote | null>(null);
   const [favorites, setFavorites] = useState<Quote[]>([]);
@@ -41,11 +45,12 @@ const RandomQuote: React.FC = () => {
 
   return (
     <div className="my-8 flex flex-col items-center">
-      {/* Stylish Button */}
+      {/* Stylish Button with Icon */}
       <button
         onClick={handleFetchQuote}
-        className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform duration-300 ease-in-out"
+        className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform duration-300 ease-in-out flex items-center gap-3"
       >
+        <FontAwesomeIcon icon={faRandom} className="text-lg" /> {/* Icon */}
         Get Random Quote
       </button>
 
