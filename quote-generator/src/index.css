@@ -8,19 +8,25 @@ html, body {
 }
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg-color: #ffffff;
+  --text-color: #213547;
+  --accent-color: #646cff;
+  --button-bg: #f9f9f9;
+  --button-text: #213547;
+  --checkered-color: var(--bg-checkered-light);
+  --checkered-lines: var(--bg-checkered-light-lines);
 }
+
+:root.dark-mode {
+  --bg-color: #242424;
+  --text-color: #ffffff;
+  --accent-color: #646cff;
+  --button-bg: #1a1a1a;
+  --button-text: #ffffff;
+  --checkered-color: var(--bg-checkered-dark);
+  --checkered-lines: var(--bg-checkered-dark-lines);
+}
+
 
 a {
   font-weight: 500;
@@ -128,21 +134,21 @@ button:focus-visible {
 }
 
 .z-10 {
-  z-index: 10; /* Ensures the quote text stays above background shapes */
+  z-index: 10; 
 }
 
 .z-0 {
-  z-index: 0; /* Ensures the background shapes stay behind the text */
+  z-index: 0; 
 }
 
 .bg-shape {
   position: absolute;
   z-index: 0;
-  pointer-events: none; /* Prevents interaction with background shapes */
+  pointer-events: none; 
 }
 
 .icon-bg {
-  background-color: rgba(255, 255, 255, 0.1); /* Subtle icon background */
+  background-color: rgba(255, 255, 255, 0.1); 
 }
 
 :root {

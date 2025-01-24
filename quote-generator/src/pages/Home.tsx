@@ -1,94 +1,66 @@
+// Home Component
 import React, { useEffect, useState } from 'react';
 import { fetchQuotes } from '../utils/api';
 import QuoteCard from '../components/QuoteCard';
 import Pagination from '../components/Pagination';
-import RandomQuote from '../components/RandomQuote';
 import { Quote } from '../types/Quote';
 
 interface HomeProps {
   darkMode: boolean;
+  favorites: Quote[];
+  setFavorites: React.Dispatch<React.SetStateAction<Quote[]>>;
 }
 
-const Home: React.FC<HomeProps> = ({ darkMode }) => {
+const Home: React.FC<HomeProps> = ({ darkMode, favorites, setFavorites }) => {
   const [quotes, setQuotes] = useState<Quote[]>([]);
-  const [favorites, setFavorites] = useState<Quote[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [loadingPlaceholders, setLoadingPlaceholders] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const limit = 3;
 
-  // Load quotes
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem('favorites');
+    if (storedFavorites) {
+      setFavorites(JSON.parse(storedFavorites));
+    }
+  }, [setFavorites]);
+
+  const toggleFavorite = (quote: Quote) => {
+    const isFavorite = favorites.some((fav) => fav.id === quote.id);
+    const updatedFavorites = isFavorite
+      ? favorites.filter((fav) => fav.id !== quote.id)
+      : [...favorites, quote];
+    setFavorites(updatedFavorites);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
+      setLoadingPlaceholders(true);
       try {
-        setLoading(true);
-        setError(null);
-        setLoadingPlaceholders(false);
         const data = await fetchQuotes(limit, (currentPage - 1) * limit);
         setQuotes(data);
+        setError(null);
       } catch (err) {
         setError('Failed to fetch quotes. Please try again later.');
       } finally {
-        setLoading(false);
+        setLoadingPlaceholders(false);
       }
     };
 
     fetchData();
   }, [currentPage]);
 
-  // Load favorites from local storage on mount
   useEffect(() => {
-    try {
-      const storedFavorites = localStorage.getItem('favorites');
-      if (storedFavorites) {
-        setFavorites(JSON.parse(storedFavorites));
-      }
-    } catch (err) {
-      console.error('Failed to load favorites from local storage:', err);
-    }
-  }, []);
-
-  // Save favorites to local storage whenever they change
-  useEffect(() => {
-    try {
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-    } catch (err) {
-      console.error('Failed to save favorites to local storage:', err);
-    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
 
   const handlePageChange = (page: number) => {
-    setLoadingPlaceholders(true);
     setCurrentPage(page);
-  };
-
-  const toggleFavorite = (quote: Quote) => {
-    const isFavorite = favorites.some((fav) => fav.id === quote.id);
-    if (isFavorite) {
-      setFavorites(favorites.filter((fav) => fav.id !== quote.id));
-    } else {
-      setFavorites([...favorites, quote]);
-    }
   };
 
   return (
     <div>
-      {/* Title */}
-      <h1 className="text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 mb-2">
-        Quotes
-      </h1>
-      <h1 className="text-5xl text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 mb-4">
-        Gallery
-      </h1>
-
-      {/* Random Quote Section */}
-      <section className="mb-12 flex justify-center items-center">
-        <RandomQuote />
-      </section>
-
-      {/* Quotes Section */}
       <section className="mb-12">
         <h2 className="text-2xl font-bold text-center mb-6">All Quotes</h2>
 
@@ -107,9 +79,21 @@ const Home: React.FC<HomeProps> = ({ darkMode }) => {
                           darkMode ? 'bg-gray-700' : 'bg-gray-300'
                         } p-6 rounded-xl shadow-md animate-pulse`}
                       >
-                        <div className={`h-6 ${darkMode ? 'bg-gray-500' : 'bg-gray-400'} rounded mb-4`}></div>
-                        <div className={`h-4 ${darkMode ? 'bg-gray-500' : 'bg-gray-400'} rounded mb-2`}></div>
-                        <div className={`h-4 ${darkMode ? 'bg-gray-500' : 'bg-gray-400'} rounded w-2/3`}></div>
+                        <div
+                          className={`h-6 ${
+                            darkMode ? 'bg-gray-500' : 'bg-gray-400'
+                          } rounded mb-4`}
+                        ></div>
+                        <div
+                          className={`h-4 ${
+                            darkMode ? 'bg-gray-500' : 'bg-gray-400'
+                          } rounded mb-2`}
+                        ></div>
+                        <div
+                          className={`h-4 ${
+                            darkMode ? 'bg-gray-500' : 'bg-gray-400'
+                          } rounded w-2/3`}
+                        ></div>
                       </div>
                     ))
                 : quotes.map((quote) => (
@@ -130,7 +114,6 @@ const Home: React.FC<HomeProps> = ({ darkMode }) => {
         )}
       </section>
 
-      {/* Favorites Section */}
       <section>
         <h2 className="text-2xl font-bold text-center mb-6">Favorites</h2>
 

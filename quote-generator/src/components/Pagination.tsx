@@ -8,7 +8,6 @@ interface PaginationProps {
 const Pagination: React.FC<PaginationProps> = ({ currentPage, onPageChange }) => {
   return (
     <div className="flex items-center justify-center gap-6 mt-8">
-      {/* Previous Button */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
@@ -21,12 +20,10 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, onPageChange }) =>
         ←
       </button>
 
-      {/* Current Page Indicator */}
       <span className="text-lg font-semibold bg-gray-900 text-white px-4 py-2 rounded-full shadow-md">
         Page {currentPage}
       </span>
 
-      {/* Next Button */}
       <button
         onClick={() => onPageChange(currentPage + 1)}
         className="w-12 h-12 flex items-center justify-center rounded-full bg-white text-black hover:bg-gradient-to-r hover:from-purple-500 hover:via-pink-500 hover:to-red-500 hover:text-white shadow-md transition-all duration-300 text-lg font-bold"
